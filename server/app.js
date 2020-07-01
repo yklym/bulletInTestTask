@@ -1,20 +1,36 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const mongoose = require("mongoose");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const {port} = require("./config");
 
-var app = express();
+app = express();
 
-app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// For DEPLOY
+// const path = require('path');
+// app.use(express.static(path.join(__dirname, "build")));
+// app.get("/*", function (req, res) {
+//     res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
 
-module.exports = app;
+
+const apiRouter = require('./routes/index');
+
+app.use('/api/v1/', apiRouter);
+
+
+const dbUrl = process.env["MONGODB_URI"];
+const connectOptions = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+};
+
+mongoose.connect(dbUrl, connectOptions)
+    .then(() => console.log('Mongo database connected'))
+    .catch((e) => console.log('ERROR: Mongo database not connected\n' + e));
+
+app.listen(port, () => console.log('App is listening on port ' + port));
+// app.listen(port);

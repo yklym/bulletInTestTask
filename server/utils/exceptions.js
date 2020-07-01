@@ -1,0 +1,1 @@
+module.exports.InvalidFormError = class InvalidFormError extends Error {}

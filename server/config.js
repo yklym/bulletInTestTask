@@ -1,0 +1,3 @@
+require('dotenv').config({path: __dirname + '/.env'}) // set up env vars
+
+module.exports.port = process.env.PORT || 8080;
