@@ -1,0 +1,23 @@
+{
+  "name": "bulletintesttask",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yklym/bulletInTestTask.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yklym/bulletInTestTask/issues"
+  },
+  "homepage": "https://github.com/yklym/bulletInTestTask#readme",
+  "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-plugin-react": "^7.20.3"
+  }
+}

@@ -5,10 +5,12 @@ router.get('/', function (req, res, next) {
     res.send("Documentation for the API:");
 });
 
-const usersRoute = require('./user');
-const postsRoute = require('./post');
+const usersRouter = require('./user');
+const postsRouter = require('./post');
+const authRouter = require('./auth');
 
-router.use("/users", usersRoute)
-router.use("/posts", postsRoute)
+router.use("/users", usersRouter);
+router.use("/posts", postsRouter);
+router.use("/auth", authRouter);
 
 module.exports = router;
