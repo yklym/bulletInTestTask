@@ -1,20 +1,12 @@
-const mongoose = require("mongoose")
-const {InvalidFormError} = require("../../utils/exceptions");
+const mongoose = require("mongoose");
+const {InvalidFormError, CantFindError} = require("../../utils/exceptions");
+const {sha512} = require("../../utils/auth");
+const {PASSWORD_HASH_KEY} = require("../../config");
 
 const UserSchema = require("../schemas/user");
 const UserModel = mongoose.model('User', UserSchema);
 
 class User {
-    constructor({email, password, firstName, lastName, posts=[]}) {
-        if(!email || !password || !firstName || !lastName){
-            throw new InvalidFormError("request doesn't have one of required fields")
-        }
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.posts = posts;
-    }
 
     static getAll() {
         return UserModel.find().sort({
@@ -23,22 +15,50 @@ class User {
     }
 
     static getById(id) {
-        return this.getAll()
-            .then(charsJsonStr => {
-                return charsJsonStr.find((element) => element.id === id);
-            });
+        return UserModel.findById(id).then(res => {
+            if (!res) {
+                return Promise.reject(new CantFindError("Can't find user with id: " + id))
+            }
+            return res;
+        });
     }
 
-    static update(id, newObj) {
-        return UserModel.findByIdAndUpdate(id, newObj);
+    static update(id, newUser) {
+        try {
+            this.checkUserFields(newUser)
+            newUser.password = sha512(newUser.password, PASSWORD_HASH_KEY)
+            const res = UserModel.findByIdAndUpdate(id, newUser);
+            if (!res) {
+                throw new CantFindError("Can't find user with id: " + id)
+            }
+            return res;
+        } catch (e) {
+            throw e
+        }
     }
 
     static insert(user) {
-        return new UserModel(user).save();
+        try {
+            this.checkUserFields(user)
+            user.password = sha512(user.password, PASSWORD_HASH_KEY)
+            return new UserModel(user).save();
+        } catch (e) {
+            return Promise.reject(e)
+        }
     }
 
     static deleteById(id) {
-        return UserModel.findByIdAndDelete(id);
+        const res = UserModel.findByIdAndDelete(id);
+        if (!res) {
+            return Promise.reject(new CantFindError("Can't find user with id: " + id))
+        }
+        return res
+    }
+
+    static checkUserFields({email, password, firstName, lastName}) {
+        if (!email || !password || !firstName || !lastName) {
+            throw new InvalidFormError("request doesn't have one of required fields")
+        }
     }
 }
 

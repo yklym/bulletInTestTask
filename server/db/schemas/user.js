@@ -15,7 +15,7 @@ let UserSchema = new Schema({
 
     firstName: {
         type: String,
-        default: "-"
+        required: true,
     },
 
     lastName: {
@@ -28,3 +28,5 @@ let UserSchema = new Schema({
         ref: "Post",
     }
 });
+
+module.exports = UserSchema
