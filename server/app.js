@@ -33,4 +33,3 @@ mongoose.connect(dbUrl, connectOptions)
     .catch((e) => console.log('ERROR: Mongo database not connected\n' + e));
 
 app.listen(port, () => console.log('App is listening on port ' + port));
-// app.listen(port);

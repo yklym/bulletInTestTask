@@ -1,18 +1,8 @@
-const mongoose = require("mongoose")
-
-const PostSchema = require("../schemas/post")
-const PostModel = mongoose.model('Post', PostSchema);
+const {InvalidFormError, CantFindError} = require("../../utils/exceptions");
+const PostModel = require("../schemas/post");
+const UserModel = require("../schemas/user");
 
 class Post {
-
-    constructor(name = "", description = "", user = -1) {
-        this.name = name;
-        this.description = description;
-        this.user = user;
-
-        let dateTmp = new Date();
-        this.addedAt = dateTmp.toISOString();
-    }
 
     static getAll() {
         return PostModel.find().sort({
@@ -21,22 +11,56 @@ class Post {
     }
 
     static getById(id) {
-        return this.getAll()
-            .then(resJsonStr => {
-                return resJsonStr.find((element) => element.id === id);
+        return PostModel.findById(id).then(res => {
+            if (!res) {
+                return Promise.reject(new CantFindError("Can't find post with id: " + id))
+            }
+            return res;
+        });
+    }
+
+    static update(id, newPost) {
+        try {
+            this.checkPostFields(newPost)
+            const res = PostModel.findByIdAndUpdate(id, newPost);
+            if (!res) {
+                throw new CantFindError("Can't find user with id: " + id)
+            }
+            return res;
+        } catch (e) {
+            return Promise.reject(e)
+        }
+    }
+
+    static insert(post) {
+        try {
+            let insertedPost = null;
+            this.checkPostFields(post)
+            return new PostModel(post).save().then(post => {
+                insertedPost = post;
+                UserModel.findById(post.user).then(userToUpdate => {
+                    userToUpdate.posts.push(insertedPost);
+                    userToUpdate.save();
+                    return userToUpdate;
+                })
             });
-    }
-
-    static update(id, newObj) {
-        return PostModel.findByIdAndUpdate(id, newObj);
-    }
-
-    static insert(user) {
-        return new PostModel(user).save();
+        } catch (e) {
+            return Promise.reject(e)
+        }
     }
 
     static deleteById(id) {
-        return PostModel.findByIdAndDelete(id);
+        const res = PostModel.findByIdAndDelete(id);
+        if (!res) {
+            return Promise.reject(new CantFindError("Can't find post with id: " + id))
+        }
+        return res
+    }
+
+    static checkPostFields({user, name}) {
+        if (!user || !name) {
+            throw new InvalidFormError("request doesn't have one of required fields")
+        }
     }
 }
 

@@ -1,10 +1,8 @@
-const mongoose = require("mongoose");
 const {InvalidFormError, CantFindError} = require("../../utils/exceptions");
 const {sha512} = require("../../utils/auth");
 const {PASSWORD_HASH_KEY} = require("../../config");
 
-const UserSchema = require("../schemas/user");
-const UserModel = mongoose.model('User', UserSchema);
+const UserModel = require("../schemas/user");
 
 class User {
 
@@ -61,5 +59,6 @@ class User {
         }
     }
 }
+
 
 module.exports = User;

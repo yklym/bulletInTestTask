@@ -7,17 +7,18 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 11
+        "ecmaVersion": 11,
+        "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "ecmaFeatures": {
+        "jsx": true
+    },
+
     "rules": {
     }
 }
