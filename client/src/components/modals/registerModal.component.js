@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
+import UserService from "../../sevices/User.service";
+
 class registerModal extends React.Component {
 
     constructor(props) {
@@ -33,6 +35,7 @@ class registerModal extends React.Component {
         }
         return false;
     };
+
     handleFormChange = (e) => {
         const prevFormState = this.state.form;
         this.setState({
@@ -47,12 +50,21 @@ class registerModal extends React.Component {
     }
 
     sendForm = ()=>{
+        console.log("sending form")
 
-        this.validateFormInputs();
-        if(!this.state.formValidationErr){
+
+        if(!this.validateFormInputs()){
             return
         }
-        this.setHidden();
+
+        console.log("sending form")
+        UserService.register(this.state.form).catch(errFromServer=>{
+            this.setState({
+                formValidationErr : `Server Error occured: ${errFromServer}`
+            });
+        }).then(res=>{
+            this.setHidden();
+        });
     }
     setVisible = isVisible => {
         this.setState({isOpen: true});

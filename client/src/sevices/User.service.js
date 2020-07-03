@@ -13,8 +13,9 @@ class UserService {
     }
 
     logIn(data) {
-        fetch(`${apiUrl}/login`, {
-            method: 'get',
+        return fetch(`${apiUrl}/auth/login`, {
+            method: 'post',
+            body: data
         }).then(res => {
             return res.json()
         })
@@ -30,6 +31,28 @@ class UserService {
                         _id: null,
                         username: null,
                     }
+                }
+            });
+    }
+
+    register(data) {
+        return fetch(`${apiUrl}/auth/register`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+            return res.json()
+        })
+            .then(parsedData => {
+                if (parsedData.err) {
+                    return Promise.reject(parsedData.message);
+                }
+                if (parsedData.data.token) {
+                    localStorage.setItem("token", parsedData.data.token);
+                    let res = jwt_decode(localStorage.token);
+                    return res;
                 }
             });
     }

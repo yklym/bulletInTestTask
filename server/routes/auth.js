@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const {sendResponse} = require("../middlewares/basic.moddlewares");
-const userController = require("../controllers/user.controller");
+const authController = require("../controllers/auth.controller");
 
 //Todo Auth
-router.post('/register', userController.create, sendResponse);
-router.post('/login', userController.getById, sendResponse);
+router.post('/register', authController.register, sendResponse);
+router.post('/login', authController.login, sendResponse);
 
 
 module.exports = router;
