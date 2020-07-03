@@ -1,13 +1,38 @@
-#root main.posts-page-main{
+#root main.posts-page-main {
 
   min-height: 65vh;
-  div.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  div.card {
+    margin: 2% 0;
+    text-align: center;
+
+
+    .card-text {
+      max-height: 7.5em;
+      overflow: hidden;
+    }
+
     div.img-wrapper {
       height: 200px;
-      img{
+
+      img {
         max-height: 100%;
         object-fit: cover;
       }
     }
+  }
+
+  div.posts-page-nores-message {
+    text-align: center;
+  }
+
+  .post-page-loader {
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    text-align: center;
   }
 }

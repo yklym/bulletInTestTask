@@ -13,5 +13,25 @@
 
 html, body {
     margin: 0;
-    padding: 0;
+    padding: 0 !important;
+
+}
+
+body{
+    //Fix bootstrap modal glitch
+    padding: 0 !important;
+    y-overflow: scroll !important;
+
+    div.modal {
+        padding-right: 0 !important;
+    }
+}
+
+.auth-link{
+    color: white;
+    cursor:pointer;
+}
+
+.auth-link:hover{
+    text-decoration: underline;
 }

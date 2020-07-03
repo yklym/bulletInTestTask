@@ -4,9 +4,10 @@ const mongoose = require("mongoose");
 const {port} = require("./config");
 
 app = express();
+const cors = require("cors");
 
 app.use(express.json());
-
+app.use(cors());
 // For DEPLOY
 // const path = require('path');
 // app.use(express.static(path.join(__dirname, "build")));

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
 import MainPageComponent from "./components/mainPage/MainPage.component";
-import NavbarComponent from "./components/partials/navbar.component";
+import NavbarComponent from "./components/partials/navbar/navbar.component";
 import FooterComponent from "./components/partials/Footer/footer.component";
 import PostsPageComponent from "./components/postsPage/PostsPage.component";
 
@@ -10,6 +10,8 @@ function App() {
         <>
             <NavbarComponent/>
             <Switch>
+                <Route exact path="/" render={() => <Redirect to="/home" />}
+                />
                 <Route exact path="/home" component={MainPageComponent}/>
                 <Route exact path="/posts" component={PostsPageComponent}/>
 

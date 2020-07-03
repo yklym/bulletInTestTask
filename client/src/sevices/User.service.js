@@ -38,3 +38,5 @@ class UserService {
         return owner_id === this.user._id;
     }
 }
+
+export default new UserService();
