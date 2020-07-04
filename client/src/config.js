@@ -1,3 +1,3 @@
-export const apiUrl = "/api/v1"; // on deploy /api/v1
-console.log(`Using api on ${apiUrl}`)
+export const apiUrl = process.env.REACT_APP_API_URL; // on deploy /api/v1
+
 export const pageSize = 5;
