@@ -82,7 +82,7 @@ class registerModal extends React.Component {
     render() {
         return (
             <>
-                <span className={"auth-link"} onClick={this.setVisible}>Sign up</span>
+                <span className={this.props.linkStyleClass ? this.props.linkStyleClass:"auth-link "} onClick={this.setVisible}>{this.props.linkStr || "Register"}</span>
                 {/*centered, size="lg"*/}
                 <Modal show={this.state.isOpen} size="md" onHide={this.setHidden}
                        keyboard={false}>

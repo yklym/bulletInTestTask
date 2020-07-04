@@ -2,7 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-
+import RegisterForm from "./RegisterModal.component";
 import UserService from "../../sevices/User.service";
 
 class loginModal extends React.Component {
@@ -68,7 +68,7 @@ class loginModal extends React.Component {
     render() {
         return (
             <>
-                <span className={"auth-link mr-2"} onClick={this.setVisible}>Login</span>
+                <span className={"auth-link mr-2"} onClick={this.setVisible}>{this.props.linkStr || "Login"}</span>
                 {/*centered, size="lg"*/}
                 <Modal show={this.state.isOpen} size="md" onHide={this.setHidden}
                        keyboard={false}>
@@ -96,7 +96,15 @@ class loginModal extends React.Component {
                             <div className="alert alert-danger" role="alert">
                                 {this.state.formValidationErr}
                             </div> : ""}
+
+                        <RegisterForm onCLick={this.setHidden} linkStr={"Don't have an account? Sign up!"}
+                                      onUserLogIn={() => {
+                                          this.setHidden();
+                                          this.props.onUserLogIn();
+                                      }
+                                      } linkStyleClass={"auth-link-blue"}/>
                     </Modal.Body>
+
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.setHidden}>
                             Close

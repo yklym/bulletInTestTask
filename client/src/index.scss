@@ -1,38 +1,43 @@
 
 #root {
-    margin: 0;
-    padding: 0;
-    background-color: rgba(3, 255, 252, 0.05);
-    min-width: 100%;
-    min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(3, 255, 252, 0.05);
+  min-width: 100%;
+  min-height: 100vh;
 
-    main {
-        margin: 3% 10%;
-    }
+  main {
+    margin: 3% 10%;
+  }
 }
 
 html, body {
-    margin: 0;
-    padding: 0 !important;
+  margin: 0;
+  padding: 0 !important;
 
 }
 
-body{
-    //Fix bootstrap modal glitch
-    padding: 0 !important;
-    y-overflow: scroll !important;
+body {
+  //Fix bootstrap modal glitch
+  padding: 0 !important;
+  y-overflow: scroll !important;
 
-    div.modal {
-        padding-right: 0 !important;
-    }
+  div.modal {
+    padding-right: 0 !important;
+  }
 }
 
-.auth-link{
-    color: white;
-    cursor:pointer;
+.auth-link {
+  color: white;
+  cursor: pointer;
 }
 
-.auth-link:hover{
-    text-decoration: underline;
+.auth-link-blue {
+  color: #0f94c6;
+  cursor: pointer;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
 }
 
