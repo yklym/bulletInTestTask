@@ -1,6 +1,6 @@
 const {InvalidFormError, CantFindError} = require("../../utils/exceptions");
-const {sha512} = require("../../utils/auth");
-const {PASSWORD_HASH_KEY} = require("../../config");
+
+
 
 const UserModel = require("../schemas/user");
 
@@ -41,7 +41,6 @@ class User {
     static update(id, newUser) {
         try {
             this.checkUserFields(newUser)
-            newUser.password = sha512(newUser.password, PASSWORD_HASH_KEY)
             const res = UserModel.findByIdAndUpdate(id, newUser);
             if (!res) {
                 throw new CantFindError("Can't find user with id: " + id)
@@ -55,7 +54,6 @@ class User {
     static insert(user) {
         try {
             this.checkUserFields(user)
-            user.password = sha512(user.password, PASSWORD_HASH_KEY)
             return new UserModel(user).save();
         } catch (e) {
             return Promise.reject(e)

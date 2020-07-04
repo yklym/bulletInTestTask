@@ -1,5 +1,5 @@
 const User = require("../db/models/user");
-const {InvalidFormError, CantFindError} = require("../utils/exceptions");
+const {InvalidFormError, CantFindError, InvalidCredentials} = require("../utils/exceptions");
 const {generateAccessToken} = require("../utils/auth");
 const {sha512} = require("../utils/auth");
 const {PASSWORD_HASH_KEY} = require("../config");
@@ -39,7 +39,7 @@ function login(req, res, next) {
     const body = req.body;
     User.getByEmail(body.email).then(userInfo => {
         if (userInfo.password !== sha512(body.password, PASSWORD_HASH_KEY)) {
-            return Promise.reject("Wrong password");
+            return Promise.reject(new InvalidCredentials("Wrong password"));
         }
         res.isSuccess = {
             data: {
@@ -48,9 +48,8 @@ function login(req, res, next) {
         }
         next();
     }).catch(err => {
-        console.log(err)
         res.isErr = {
-            code: (err instanceof CantFindError ? 400 : 500),
+            code: (err instanceof CantFindError || err instanceof InvalidCredentials ? 400 : 500),
             message: err.toString()
         }
         next();

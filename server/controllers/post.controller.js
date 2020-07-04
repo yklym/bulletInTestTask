@@ -31,6 +31,8 @@ function getById(req, res, next) {
 
 function create(req, res, next) {
     let body = req.body;
+    body.user = req.user._id;
+    console.log(body)
     Post.insert(body).then(finRes => {
         res.isSuccess = {
             code: 201,

@@ -1,4 +1,5 @@
-import { apiUrl } from "../config";
+import {apiUrl} from "../config";
+import jwt_decode from "jwt-decode";
 
 class JobService {
     constructor() {
@@ -29,9 +30,32 @@ class JobService {
 
     }
 
-    getPagesCount(pageSize){
+    getPagesCount(pageSize) {
         return Math.ceil(this.posts.length / pageSize);
     }
+
+    create(data) {
+        return fetch(`${apiUrl}/posts`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `bearer ${localStorage.getItem("token") || ""}`,
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+            if (res.status === 500) {
+                return Promise.reject("Server error occurred");
+            }
+            return res.json()
+        })
+            .then(parsedData => {
+                if (parsedData.err) {
+                    return Promise.reject(parsedData.message);
+                }
+                return parsedData.data;
+            });
+    }
+
     // TODO - loadPostById(id);
     // TODO - createPost
 }

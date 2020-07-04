@@ -40,7 +40,6 @@ class loginModal extends React.Component {
             formValidationErr: null
 
         });
-
     }
 
     sendForm = () => {
@@ -87,7 +86,7 @@ class loginModal extends React.Component {
 
                             <Form.Group controlId="registerFormPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Create password" name="password"
+                                <Form.Control type="password" placeholder="Enter password" name="password"
                                               onChange={this.handleFormChange}/>
                             </Form.Group>
 

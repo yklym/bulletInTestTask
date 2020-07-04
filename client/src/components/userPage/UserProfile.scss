@@ -1,0 +1,25 @@
+
+#root main.user-profile-main {
+  margin: 5% auto;
+  min-height: 56.5vh;
+  max-width: 80%;
+  background-color: white;
+  border: 1px solid;
+
+  .nav-link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    border: none;
+  }
+
+  section.content-wrapper {
+    padding: 5%
+  }
+}
+
+.user-info-table {
+  .job-page-details .table-wrapper td:first-of-type {
+    font-weight: bolder;
+    text-decoration: underline;
+  }
+}

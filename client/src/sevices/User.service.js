@@ -68,6 +68,47 @@ class UserService {
             });
     }
 
+    update(id, data) {
+        return fetch(`${apiUrl}/users/${id}`, {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `bearer ${localStorage.getItem("token") || ""}`,
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+            if (res.status === 500) {
+                return Promise.reject("Server error occurred");
+            }
+            return res.json()
+        }).then(parsedData => {
+            if (parsedData.err) {
+                return Promise.reject(parsedData.message);
+            }
+            return parsedData.data;
+        });
+    }
+
+    loadInfo(id) {
+        return fetch(`${apiUrl}/users/${id}`, {
+            method: 'get',
+            headers: {
+                'authorization': `bearer ${localStorage.getItem("token") || ""}`,
+                'Content-Type': 'application/json'
+            },
+        }).then(res => {
+            if (res.status === 500) {
+                return Promise.reject("Server error occurred");
+            }
+            return res.json()
+        }).then(parsedData => {
+            if (parsedData.err) {
+                return Promise.reject(parsedData.message);
+            }
+            return parsedData.data;
+        });
+    }
+
     isOwner(owner_id) {
         return owner_id === this.user._id;
     }

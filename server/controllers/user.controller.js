@@ -1,5 +1,7 @@
 const User = require("../db/models/user");
 const {InvalidFormError, CantFindError} = require("../utils/exceptions");
+const {sha512} = require("../utils/auth");
+const {PASSWORD_HASH_KEY} = require("../config");
 
 function getAll(req, res, next) {
     User.getAll().then(usersList => {
@@ -31,7 +33,7 @@ function getById(req, res, next) {
 
 function create(req, res, next) {
     let body = req.body;
-    console.log(body);
+    body.password = sha512(body.password, PASSWORD_HASH_KEY);
     User.insert(body).then(finRes => {
         res.isSuccess = {
             code: 201,
@@ -62,10 +64,20 @@ function _delete(req, res, next) {
 }
 
 function update(req, res, next) {
-    let body = req.body;
     const userId = req.params.id;
+    let body = req.body;
+    let oldUserInfo = {}
+    User.getById(userId).then(userInfo => {
 
-    User.update(userId, body).then(finRes => {
+        oldUserInfo=userInfo;
+        if(!body.password){
+            body.password = oldUserInfo.password;
+        } else {
+            body.password = sha512(body.password, PASSWORD_HASH_KEY)
+        }
+
+        return User.update(userId, body)
+    }).then(finRes => {
         res.isSuccess = {
             data: finRes
         }

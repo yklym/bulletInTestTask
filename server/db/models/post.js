@@ -7,7 +7,7 @@ class Post {
     static getAll() {
         return PostModel.find().sort({
             created: -1
-        });
+        }).populate("user");
     }
 
     static getById(id) {

@@ -5,6 +5,7 @@ import {NavLink} from "react-router-dom";
 import UserService from "../../../sevices/User.service";
 import RegisterModal from "../../modals/RegisterModal.component";
 import LoginModal from "../../modals/LoginModal.component";
+import {Redirect} from 'react-router-dom';
 
 class NavbarComponent extends React.Component {
 
@@ -13,12 +14,16 @@ class NavbarComponent extends React.Component {
 
         this.state = {
             currUser: UserService.user,
+            onLogoutRedirect: null,
         }
     }
 
     onUserLogout = () => {
         UserService.logOut();
-        this.setState({currUser: UserService.user});
+        this.setState({
+            currUser: UserService.user,
+            onLogoutRedirect: <Redirect to="/home/"/>,
+        })
     }
 
     onUserLogIn = () => {
@@ -28,6 +33,12 @@ class NavbarComponent extends React.Component {
     render() {
 
         const user = this.state.currUser;
+
+        const redirectPath = this.state.onLogoutRedirect;
+        if (redirectPath) {
+            this.setState({onLogoutRedirect: null})
+            return redirectPath;
+        }
 
         return (
             <>
@@ -47,8 +58,8 @@ class NavbarComponent extends React.Component {
                                                   onClick={this.onUserLogout}>{user.fullName}</span></>
                             :
                             <>
-                                <LoginModal  onUserLogIn={this.onUserLogIn}/>
-                                <RegisterModal onUserLogIn={this.onUserLogIn}/>
+                                <LoginModal onUserLogIn={this.onUserLogIn} linkStr={"Log In"}/>
+                                <RegisterModal onUserLogIn={this.onUserLogIn} linkStr={"Sign Up"}/>
                             </>
                         }
                     </Navbar.Text>

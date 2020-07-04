@@ -37,8 +37,10 @@ class PostsPageComponent extends React.Component {
     };
 
     renderPostsCards = posts => {
+        console.log(posts);
         return posts.map(post => {
-            return (<Card key={post._id} className={UserService.user && UserService.user._id === post.user ? "border-danger" :"border-secondary" }>
+            return (<Card key={post._id}
+                          className={UserService.user && post.user &&UserService.user._id === post.user._id ? "border-danger" : "border-secondary"}>
                 <div className={"img-wrapper"}>
                     <Card.Img variant="top"
                               src="https://cdn.royalcanin-weshare-online.io/aGkhPmYBG95Xk-RBGt0V/v1/ec12h-5-key-milestones-in-your-kittens-growth-hero-cat"/>
@@ -49,6 +51,11 @@ class PostsPageComponent extends React.Component {
                     <Card.Text>
                         {post.description}
                     </Card.Text>
+                    <Card.Footer className={"post-card-footer"}>
+                        <p><strong>Author:</strong> {post.user ? `${post.user.firstName} ${post.user.firstName}` : "User deleted"}</p>
+                        <p><strong>Created at:</strong> {new Date(post.addedAt).toDateString()} </p>
+                    </Card.Footer>
+
                     <Button variant="primary">Continue reading</Button>
                 </Card.Body>
             </Card>);
@@ -67,7 +74,7 @@ class PostsPageComponent extends React.Component {
     render() {
         const postsList = this.state.postsPage;
 
-        if(!postsList){
+        if (!postsList) {
             return (
                 <main className="posts-page-main">
                     <Spinner animation="border" role="status" className="post-page-loader">
@@ -82,7 +89,8 @@ class PostsPageComponent extends React.Component {
 
                 {/*TODO Add filters block*/}
 
-                <PaginationComponent maxPage={PostsService.getPagesCount(pageSize)} currPage={this.state.currPage} renderPage={this.renderPage}/>
+                <PaginationComponent maxPage={PostsService.getPagesCount(pageSize)} currPage={this.state.currPage}
+                                     renderPage={this.renderPage}/>
             </main>
         );
     }
