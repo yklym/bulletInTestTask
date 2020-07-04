@@ -1,8 +1,8 @@
 import React from 'react';
 import {Route, Switch, Redirect} from "react-router-dom";
 import MainPageComponent from "./components/mainPage/MainPage.component";
-import NavbarComponent from "./components/partials/navbar/navbar.component";
-import FooterComponent from "./components/partials/Footer/footer.component";
+import NavbarComponent from "./components/partials/navbar/Navbar.component";
+import FooterComponent from "./components/partials/Footer/Footer.component";
 import PostsPageComponent from "./components/postsPage/PostsPage.component";
 
 function App() {

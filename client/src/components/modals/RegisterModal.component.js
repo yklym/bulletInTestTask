@@ -25,9 +25,11 @@ class registerModal extends React.Component {
     }
 
     validateFormInputs = () => {
-        if (this.state.form.password !== this.state.form.passwordRepeat) {
+        if(!this.validateEmail(this.state.form.email)){
+            this.setState({formValidationErr: "Wrong email format!"});
+        } else if (this.state.form.password !== this.state.form.passwordRepeat) {
             this.setState({formValidationErr: "Passwords must match!"});
-        } else if (Object.values(this.state.form).some(x =>  x === '')) {
+        } else if (Object.values(this.state.form).some(x => x === '')) {
             this.setState({formValidationErr: "all fields are required"});
         } else {
             this.setState({formValidationErr: null});
@@ -43,27 +45,25 @@ class registerModal extends React.Component {
                 ...prevFormState,
                 [e.target.name]: e.target.value
             },
-            formValidationErr : null
+            formValidationErr: null
 
         });
 
     }
 
-    sendForm = ()=>{
-        console.log("sending form")
+    sendForm = () => {
 
-
-        if(!this.validateFormInputs()){
+        if (!this.validateFormInputs()) {
             return
         }
 
-        console.log("sending form")
-        UserService.register(this.state.form).catch(errFromServer=>{
-            this.setState({
-                formValidationErr : `Server Error occured: ${errFromServer}`
-            });
-        }).then(res=>{
+        UserService.register(this.state.form).then(res => {
             this.setHidden();
+            this.props.onUserLogIn();
+        }).catch(errFromServer => {
+            this.setState({
+                formValidationErr: errFromServer
+            });
         });
     }
     setVisible = isVisible => {
@@ -74,8 +74,12 @@ class registerModal extends React.Component {
         this.setState({isOpen: false});
     }
 
+    validateEmail = email => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(String(email).toLowerCase());
+    }
+
     render() {
-        console.log(this.state)
         return (
             <>
                 <span className={"auth-link"} onClick={this.setVisible}>Sign up</span>

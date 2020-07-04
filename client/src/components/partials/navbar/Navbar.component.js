@@ -3,7 +3,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {NavLink} from "react-router-dom";
 import UserService from "../../../sevices/User.service";
-import RegisterModal from "../../modals/registerModal.component"
+import RegisterModal from "../../modals/RegisterModal.component";
+import LoginModal from "../../modals/LoginModal.component";
 
 class NavbarComponent extends React.Component {
 
@@ -20,10 +21,13 @@ class NavbarComponent extends React.Component {
         this.setState({currUser: UserService.user});
     }
 
+    onUserLogIn = () => {
+        this.setState({currUser: UserService.user});
+    }
+
     render() {
 
         const user = this.state.currUser;
-
 
         return (
             <>
@@ -37,17 +41,14 @@ class NavbarComponent extends React.Component {
 
                     </Nav>
 
-
                     <Navbar.Text className="ml-auto">
                         {user ?
                             <>Signed in as: <span className={"auth-link"}
-                                                  onClick={() => this.onUserLogout}>Mark Otto</span></>
+                                                  onClick={this.onUserLogout}>{user.fullName}</span></>
                             :
                             <>
-                                <span  className={"auth-link mr-4"}  onClick={() => this.setState({showLoginModal: true})}>Log
-                                    in</span>
-
-                                <RegisterModal/>
+                                <LoginModal  onUserLogIn={this.onUserLogIn}/>
+                                <RegisterModal onUserLogIn={this.onUserLogIn}/>
                             </>
                         }
                     </Navbar.Text>

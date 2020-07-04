@@ -21,6 +21,23 @@ class User {
         });
     }
 
+    static checkIfFreeEmail(userEmail){
+        return this.getByEmail(userEmail).then(()=>{
+            return false;
+        }).catch(()=>{
+            return true;
+        })
+    }
+
+    static getByEmail(userEmail) {
+        return UserModel.findOne({email : userEmail}).then(res => {
+            if (!res) {
+                return Promise.reject(new CantFindError("No users with such an email: " + userEmail))
+            }
+            return res;
+        });
+    }
+
     static update(id, newUser) {
         try {
             this.checkUserFields(newUser)
