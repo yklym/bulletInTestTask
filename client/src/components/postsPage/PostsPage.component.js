@@ -51,7 +51,7 @@ class PostsPageComponent extends React.Component {
                         {post.description}
                     </Card.Text>
                     <Card.Footer className={"post-card-footer"}>
-                        <p><strong>Author:</strong> {post.user ? `${post.user.firstName} ${post.user.firstName}` : "User deleted"}</p>
+                        <p><strong>Author:</strong> {post.user ? `${post.user.firstName} ${post.user.lastName}` : "User deleted"}</p>
                         <p><strong>Created at:</strong> {new Date(post.addedAt).toDateString()} </p>
                     </Card.Footer>
 
