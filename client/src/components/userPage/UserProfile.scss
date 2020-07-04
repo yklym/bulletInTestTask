@@ -5,11 +5,24 @@
   max-width: 80%;
   background-color: white;
   border: 1px solid;
+  .nav-link{
+    margin: 1% 0;
+    font-weight: bold;
+  }
 
   .nav-link:hover {
     cursor: pointer;
     text-decoration: underline;
     border: none;
+  }
+  .link-border-left{
+    border-left: 1px solid black;
+    border-top-left-radius: 0;
+
+  }
+
+  .link-border-left:hover{
+    border-left: 1px solid black;
   }
 
   section.content-wrapper {

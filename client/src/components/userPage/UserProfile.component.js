@@ -67,11 +67,11 @@ class UserProfile extends React.Component {
                         <p className={"nav-link"} onClick={() => this.setShowMode("userInfo")}>View My info</p>
                     </Nav.Item>
                     <Nav.Item>
-                        <p className={"nav-link"} onClick={() => this.setShowMode("updateInfoForm")}>Edit my profile</p>
+                        <p className={"nav-link link-border-left"} onClick={() => this.setShowMode("updateInfoForm")}>Edit my profile</p>
 
                     </Nav.Item>
                     <Nav.Item>
-                        <p className={"nav-link"} onClick={() => this.setShowMode("createPost")}>Create Post</p>
+                        <p className={"nav-link link-border-left"} onClick={() => this.setShowMode("createPost")}>Create Post</p>
                     </Nav.Item>
                 </Nav>
 

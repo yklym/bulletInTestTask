@@ -37,7 +37,6 @@ class PostsPageComponent extends React.Component {
     };
 
     renderPostsCards = posts => {
-        console.log(posts);
         return posts.map(post => {
             return (<Card key={post._id}
                           className={UserService.user && post.user &&UserService.user._id === post.user._id ? "border-danger" : "border-secondary"}>

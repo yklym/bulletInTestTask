@@ -65,7 +65,6 @@ class UpdateInfoForm extends React.Component {
     }
 
     render() {
-        console.log(this.state.userInfo);
         return (
             <>
                 <Form>

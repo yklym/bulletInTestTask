@@ -29,9 +29,12 @@ Then you can run both cient dev server and back-end server or build client with
 
     npm build
 In client directory and mooving build dir to back-end server's dir.  
-Server .env file has suach a configuration:
+Server .env file has such a configuration:
     
     MONGODB_URI 
     PORT
     PASSWORD_HASH_KEY 
     JWT_SECRET
+Client .env file has only one variable and is used for deployment:
+    
+    REACT_APP_API_URL

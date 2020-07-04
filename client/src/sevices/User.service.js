@@ -52,8 +52,6 @@ class UserService {
             return res.json()
         })
             .then(parsedData => {
-                console.log("Parsed data:")
-                console.log(parsedData)
                 if (parsedData.err) {
                     return Promise.reject(parsedData.message);
                 }

@@ -1,4 +1,3 @@
-
-export const apiUrl = "http://localhost:3333/api/v1" // on deploy /api/v1
+export const apiUrl = process.env.REACT_APP_API_URL; // on deploy /api/v1
 
 export const pageSize = 5;

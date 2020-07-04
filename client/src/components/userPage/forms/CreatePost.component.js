@@ -31,7 +31,6 @@ class UpdateInfoForm extends React.Component {
         }
 
         PostService.create(this.state.form).then(res => {
-            console.log(res)
             this.props.closeForm();
         }).catch(errFromServer => {
             this.setState({

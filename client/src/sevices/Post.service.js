@@ -1,7 +1,7 @@
 import {apiUrl} from "../config";
 import jwt_decode from "jwt-decode";
 
-class JobService {
+class PostService {
     constructor() {
         this.posts = [];
     }
@@ -55,11 +55,8 @@ class JobService {
                 return parsedData.data;
             });
     }
-
-    // TODO - loadPostById(id);
-    // TODO - createPost
 }
 
-const service = new JobService();
+const service = new PostService();
 
 export default service;
