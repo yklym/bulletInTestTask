@@ -1,6 +1,6 @@
 # Bullet-in Test task
 
-## Demo
+## [Demo](https://bulletin-test-task.herokuapp.com/)
 
 ## Description
    To see additional features, follow the demo link.
@@ -22,13 +22,13 @@ Auth API operations:
     post: /api/v1/auth/register
 
 ## Install & run
-After clonning, install packages in both client and server directories:
+After cloning, install packages in both client and server directories:
     
     npm -i
-Then you can run both cient dev server and back-end server or build client with 
+Then you can run both client dev server and back-end server or build client with 
 
     npm build
-In client directory and mooving build dir to back-end server's dir.  
+In client directory and moving build dir to back-end server's dir.  
 Server .env file has such a configuration:
     
     MONGODB_URI 

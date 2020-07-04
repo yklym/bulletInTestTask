@@ -9,18 +9,16 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
+const apiRouter = require('./routes/index');
+
+app.use('/api/v1/', apiRouter);
+
 // For DEPLOY
 // const path = require('path');
 // app.use(express.static(path.join(__dirname, "build")));
 // app.get("/*", function (req, res) {
 //     res.sendFile(path.join(__dirname, "build", "index.html"));
 // });
-
-
-const apiRouter = require('./routes/index');
-
-app.use('/api/v1/', apiRouter);
-
 
 const dbUrl = process.env["MONGODB_URI"];
 const connectOptions = {
